@@ -4,7 +4,11 @@ import { io } from 'socket.io-client';
 const QuizSession = ({ quizId }) => {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [leaderboard, setLeaderboard] = useState([]);
-  const socket = io('http://localhost:5000'); // Backend URL
+  const socket = io('${import.meta.env.BACKEND_URL}', {
+    transports: ['websocket'],
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+  });
 
   useEffect(() => {
     // Quiz oturumuna katıl
